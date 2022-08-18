@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- perulangan untuk menampilkan setiap product -->
+        <p v-for="product in products" :key="product.product_id">{{ product.product_name }}</p>
+    </div>
+    <!-- import axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- import cdn vue.js -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- import script app -->
+    <script src="./app.js"></script>
+</body>
+</html>

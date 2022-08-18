@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/pdf-lib@1.4.0"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+  </head>
+  <body>
+    <p>Click the button to modify an existing PDF document with <code>pdf-lib</code></p>
+    <button onclick="modifyPdf()">Modify PDF</button>
+    <p class="small">(Your browser will download the resulting file)</p>
+  </body>
+
+  <script>
+    const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib
+    async function modifyPdf() {
+      // Fetch an existing PDF document
+      const url = './doc.pdf'
+      // if cors error when fetch document url  
+      const headers = new Headers();
+      headers.append('Access-Control-Allow-Origin', 'https://storage.ppa-ho.net' )
+      
+  		const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
+
+      // Load a PDFDocument from the existing PDF bytes
+      const pdfDoc = await PDFDocument.load(existingPdfBytes)
+
+      // Embed the Helvetica font
+      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+
+      // Get the first page of the document
+      const pages = pdfDoc.getPages()
+      const page = pages[0]
+
+      // Get the width and height of the first page
+      const { width, height } = page.getSize()
+
+      // Draw a string of text diagonally across the first page
+        page.drawText('Select your favorite rocket:', { x: 50, y: 600, size: 20 })
+        page.drawText('Falcon Heavy', { x: 120, y: 560, size: 18 })
+        page.drawText('Saturn IV', { x: 120, y: 500, size: 18 })
+        page.drawText('Delta IV Heavy', { x: 340, y: 560, size: 18 })
+        page.drawText('Space Launch System', { x: 340, y: 500, size: 18 })
+
+      // Serialize the PDFDocument to bytes (a Uint8Array)
+      const pdfBytes = await pdfDoc.save()
+
+			// Trigger the browser to download the PDF document
+      download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+    }
+  </script>
+</html>

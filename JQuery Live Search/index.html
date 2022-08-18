@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style>
+    table{
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+    }
+    table>thead>tr>th, table>tbody>tr>td{
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+    .noresult{
+        display: none;
+    }
+    *{
+        margin: 5px 0;
+        padding: 0;
+    }
+    .box{
+        display: flex;
+        justify-content: center;
+        /* gap: 20px; */
+        padding: 15px;
+        flex-wrap: wrap;
+    }
+    .card{
+        margin: 10px;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0px 5px 20px 0 #ddd;
+        flex: 1 1 250px;
+    }
+    a{
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        padding: 5px 10px;
+    }
+    nav ul {
+        display: flex;
+        gap: 20px;
+    }
+    nav ul li{
+        list-style: none;
+        border: 1px solid rgb(173, 173, 173);
+    }
+</style>
+<body>
+    <h2>Daftar Nama Karyawan</h2>
+    <div>
+        <label for="all">Cari Karyawan</label>
+        <input type="text" placeholder="Masukkan kata pencarian" id="srcall">
+    </div>
+    <div>
+        <label for="all">Cari Berdasarkan Nama</label>
+        <input type="text" placeholder="Masukkan nama karyawan" id="srcnama">
+    </div>
+    <h1 class="noresult">Maaf Data tidak ditemukan</h1>
+    <div class="box" id="box">
+        <div class="card">
+            <h2>Rizki Ramadhan</h2>
+            <h4>System Developer</h4>
+            <p>Baturaja | Teknik Informatika</p>
+        </div>
+        <div class="card">
+            <h2>Asmarita Dwi Anggraini</h2>
+            <h4>Tenaga Kesehatan</h4>
+            <p>Palembang | Kebidanan</p>
+        </div>
+        <div class="card">
+            <h2>Nashwa Alnaira</h2>
+            <h4>Tenaga Kesehatan</h4>
+            <p>Palembang | Dokter</p>
+        </div>
+        <div class="card">
+            <h2>Zayn Al Khalid</h2>
+            <h4>Network Engineer</h4>
+            <p>Pagar Alam | Manajemen Informatika</p>
+        </div>
+    </div>
+    <script>
+        // memberikan sebuah function saat halaman selesai di load
+        $(document).ready(function(){
+            // menambahkan event listener ke elemen tertentu yakni srcall
+            $('#srcall').keyup(function(){
+                // mendapatkan nilai dari elemetn srcall dan dimasukkan ke dalam variabel searchparam
+                var searchparam = $(this).val();
+                $('.card').hide();
+                var length = $('#box .card:contains("'+searchparam+'")').length;
+                if(length > 0){
+                    $('#box .card:contains("'+searchparam+'")').each(function(){
+                        $(this).closest('.card ').show()
+                        $('.noresult').hide()
+                    })
+                } else {
+                    $('.noresult').show()
+                }
+            })
+            // menambahkan even listener ke elemen tertentu yakni srcnama
+            $('#srcnama').keyup(function(){
+                var searchparam = $(this).val()
+                $('.card').hide()
+                var length = $('.card h2:contains("'+searchparam+'")').length
+                if(length){
+                    $('.card h2:contains("'+searchparam+'")').each(function(){
+                        $(this).closest('.card').show()
+                        $('.noresult').hide()
+                    })
+                } else {
+                    $('.noresult').show()
+                }
+            })
+            // mengkonversi inputan agar non case sensitive
+            $.expr[":"].contains = $.expr.createPseudo(function(arg){
+                return function(elem){
+                    return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+                }
+            })
+        })
+    </script>
+    <!-- table -->
+    <div style="margin: 0 auto; width: 80%; margin-left: 20%">
+        <table border-collapse="collapse" >
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Nama Hero</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <nav>
+            <ul>
+                <li >
+                    <a class="pageitem" data="prev" href="#" aria-label="Previous">&laquo;</a>
+                    
+                </li>
+                <li >
+                    <a class="pageitem" data="next" href="#" aria-label="Next">&raquo;</a>
+                </li>
+                <li style="border: none">
+                    <p><span id="cur_page"></span> page of <span id="total_page"></span></p>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <script>
+        var heroes = ["Ling","Hayabusa","Lilya","Johnson","Helcurt","Saber","Lesley","Kagura","Tigreal","Popol Kupa"];
+        function show(row, page){
+            // mengosongkan html atau elemen di dalam tbody
+            $('tbody').html("");
+            // menetapkan limit
+            let limit = parseInt(row);
+            // menetapkan var current page
+            let current = parseInt(page)
+            // menetapkan total keseluruhan page
+            let total_page = Math.ceil(heroes.length/limit);
+            // menetapkan jumlah pagination
+            let length = limit * (current + 1);
+            if (length >= heroes.length){
+                length = heroes.length
+            }
+            let offset = current * limit;
+            $("#cur_page").text(current + 1);
+            $("#total_page").text(total_page);
+            for(let i = offset; i < length; i++){
+                $('tbody').append(`
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${heroes[i]}</td>
+                    </tr>
+                `)
+            }
+        }
+        show("4","0")
+
+        
+        // $(document).on('click', '.pageitem')
+        $(document).on('click', ".pageitem", function(e){
+            e.preventDefault();
+            var key = $(this).attr("data")
+            var total = $("#total_page").text();
+            var current = $("#cur_page").text();
+            var page = parseInt(current) -1;
+            var length = parseInt(total) -1;
+            if(key == 'prev'){
+                if(page <=0){
+                    page = 0
+                } else {
+                    page--
+                }
+            } else if(key == "next"){
+                if(page >= length){
+                    page= length
+                } else {
+                    page++
+                }
+            }
+            show("4", page)
+            
+        })
+    </script>
+    
+    
+
+</body>
+</html>

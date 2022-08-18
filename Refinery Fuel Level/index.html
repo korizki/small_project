@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Meter</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+</head>
+<body>
+    <div id="app"> 
+        <h1 class="title">Fuel Information</h1>
+        <div class="container">
+            <div class="fuelMeter"><div class="water heightsize" :style="'height : '+heightLevel+'px' " ></div></div>
+            <div>
+                <label for="">Set Value Fuel Volume : </label><input v-model="tankinfo.fuelvolume" type="range" max="500000" min="0" class="input" @change="setLevel" ><label for="" class="warn">* max 5000 (in KL)</label>
+            </div>
+            <img src="./assets/kilang.png" alt="gambar-kilang" width="300" height="">
+            <div v-if="tankinfo">
+                <h1>Refinery Information - {{ tank1.name }} </h1>
+                <div class="info">
+                    <h3>Fuel Volume</h3>
+                    <p>{{ tankinfo.fuelvolume.toLocaleString() }}</p>
+                </div>
+                <div class="info">
+                    <h3>Fuel Level</h3>
+                    <p>{{ tankinfo.fuellevel }}</p>
+                </div>
+                <div class="info">
+                    <h3>Fuel Temperature</h3>
+                    <p>{{ tankinfo.fueltemperature.toLocaleString() }} Celcius</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>

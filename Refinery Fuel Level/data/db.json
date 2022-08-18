@@ -1,0 +1,16 @@
+{
+    "data": [
+    {
+        "timestamp":"2022-08-04 01:08:49","fuellevel":"6558.69","fueltemperature":"28.97","fuelvolume":"483093.68","waterlevel":"89.93"
+    },
+    {
+        "timestamp":"2022-08-04 02:09:35","fuellevel":"6558.67","fueltemperature":"28.95","fuelvolume":"483091.05","waterlevel":"90.05"
+    },
+    {
+        "timestamp":"2022-08-04 03:15:30","fuellevel":"6558.30","fueltemperature":"28.88","fuelvolume":"483077.89","waterlevel":"90.07"
+    },
+    {
+        "timestamp":"2022-08-04 04:15:36","fuellevel":"6557.95","fueltemperature":"28.81","fuelvolume":"483067.37","waterlevel":"89.97"
+    }
+]
+}
