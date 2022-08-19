@@ -10,23 +10,19 @@
     margin: 0;
     padding: 0;
   }
-
   .example {
     position: absolute;
     bottom: 0;
     left: 0;
     color: rgb(1, 0, 0)
   }
-
   .first {
     font-size: 16px;
   }
-
   .second {
     font-size: 24px;
     font-weight: 800;
   }
-
   .third {
     font-size: 18px;
   }
@@ -82,5 +78,62 @@
     download(pdfBytes, "New Doc.pdf", "application/pdf");
   }
 </script>
-
 </html>
+
+<!-- $('.btnview').click(async function() {
+  // set url address / lokasi file pdf
+  const url = $(this).attr('id');
+  // download pdf lewat fetch url
+  const existingPdf = await fetch(url).then(res => res.arrayBuffer())
+  // meload file pdf
+  const pdfDoc = await PDFDocument.load(existingPdf)
+  // download font
+  const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica)
+  // get total page of document
+  const pages = pdfDoc.getPages()
+  // edit setiap page pdf
+  for (let i = 0; i < pages.length; i++) {
+    // menentukan halaman yang akan diedit
+    const page = pages[i]
+    const { width, height } = page.getSize()
+    // Draw a string of text diagonally across the first page
+    page.drawText(`Requested at ${result.tanggal_pengajuan}`, { x: width - 250, y: 58, size: 10, color: rgb(1, 0, 0), })
+    page.drawText(`By : ${result.nama}`, { x: width - 250, y: 36, size: 18, color: rgb(1, 0, 0), })
+    page.drawText(`From ${result.site} | ${result.dept}`, { x: width - 250, y: 20, size: 12, color: rgb(1, 0, 0) })
+  }
+  // menyimpan pdf
+  const pdfBytes = await pdfDoc.save()
+  // convert blob to new pdf extension
+  const file = new Blob([pdfBytes], {type: 'application/pdf'});
+  const newFile = URL.createObjectURL(file);
+  // open the file
+  window.open(newFile)
+})
+
+  // event listener download button on click
+  $('.btndown').click(async function() {
+    // set url address / lokasi file pdf
+  const url = $(this).attr('id');
+  // download pdf lewat fetch url
+  const existingPdf = await fetch(url).then(res => res.arrayBuffer())
+  // meload file pdf
+  const pdfDoc = await PDFDocument.load(existingPdf)
+  // download font
+  const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica)
+  // get total page of document
+  const pages = pdfDoc.getPages()
+  // edit setiap page pdf
+  for (let i = 0; i < pages.length; i++) {
+    // menentukan halaman yang akan diedit
+    const page = pages[i]
+    const { width, height } = page.getSize()
+    // Draw a string of text diagonally across the first page
+    page.drawText(`Requested at ${result.tanggal_pengajuan}`, { x: width - 250, y: 58, size: 10, color: rgb(1, 0, 0), })
+    page.drawText(`By : ${result.nama}`, { x: width - 250, y: 36, size: 18, color: rgb(1, 0, 0), })
+    page.drawText(`From ${result.site} | ${result.dept}`, { x: width - 250, y: 20, size: 12, color: rgb(1, 0, 0) })
+  }
+  // menyimpan pdf
+  const pdfBytes = await pdfDoc.save()
+  // download file pdf
+  download(pdfBytes, `${result.site}_${result.nama}_${result.tanggal_pengajuan}`,"application/pdf")
+  }) -->
